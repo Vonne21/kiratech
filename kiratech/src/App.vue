@@ -97,6 +97,7 @@ const closeGeneralModel = () => {
   </div>
 
   <div class="max-w-5xl mx-auto mt-24">
+
     <div v-if="userList?.results && !showSpinner" class="flex gap-4 mb-4">
       <div class="flex justify-center items-center ">
         <button v-if="currentPage > 1" @click="changePage(currentPage - 1)"
@@ -109,7 +110,11 @@ const closeGeneralModel = () => {
           Next
         </button>
       </div>
+
       <div class="ml-auto flex gap-4 mb-4 items-center">
+        <button @click="fetchUser"
+          class="flex px-4 py-1 text-xs border rounded-lg mr-2 hover:bg-cyan-500 hover:text-white items-center"><img
+            src="/refresh.png" alt="" class="h-3 mr-2">Refresh List</button>
         <button @click=" filterGender('female')"
           class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white">
           Female
@@ -128,7 +133,8 @@ const closeGeneralModel = () => {
 
 
   <ModelPopup :showPopup="showPopup" :card="selectedCard" @close="closePopup" />
-  <GeneralModel :showGeneralModel="showGeneralModel" :typeOfModel="typeOfModel" @closeGeneralModel="closeGeneralModel" />
+  <GeneralModel :showGeneralModel="showGeneralModel" :typeOfModel="typeOfModel"
+    @closeGeneralModel="closeGeneralModel" />
 
 </template>
 
