@@ -3,7 +3,8 @@ import { ref, onMounted, computed } from 'vue'
 import CardList from './components/CardList.vue'
 import spinner from './components/spinner.vue'
 import ModelPopup from './components/ModelPopup.vue'
-import GeneralModel from './components/GeneralModel.vue'
+import Navbar from './components/Navbar.vue'
+import ProfileBanner from './components/ProfileBanner.vue'
 
 const showSpinner = ref(false);
 const currentPage = ref(1);
@@ -12,7 +13,10 @@ const itemsPerPage = 20;
 let userList = ref(null);
 const genderFilter = ref('');
 
-async function fetchUser(page = 1) {
+async function fetchUser(page = 1, button) {
+  if (button == 'refresh') {
+    genderFilter.value = ''
+  }
   showSpinner.value = true;
   await fetch(`https://randomuser.me/api/?page=${page}&results=${itemsPerPage}&gender=${genderFilter.value}`)
     .then(response => { return response.json() })
@@ -56,71 +60,39 @@ const changePage = (page) => {
   fetchUser(currentPage.value);
 };
 
-const showGeneralModel = ref(false)
-const typeOfModel = ref('')
-
-const openGeneralModel = (type) => {
-  typeOfModel.value = type;
-  showGeneralModel.value = true;
-};
-const closeGeneralModel = () => {
-  showGeneralModel.value = false;
-};
-
-
-
 </script>
 
 <template>
-  <div class="bg-cyan-500 w-full min-h-[154px]">
-    <div class="max-w-5xl mx-auto flex">
-      <img src="/Avatar.png" alt="" class="w-36 h-36 relative top-14">
-      <div class="flex flex-col text-white self-end mb-2 ml-5">
-        <p class="font-bold text-2xl">John Doe</p>
-        <p>Last Online 2 days</p>
-      </div>
-      <div class="flex flex-row self-end ml-4 mb-2">
-        <button
-          class="bg-white px-4 py-2 text-xs font-semibold text-cyan-500 rounded-lg h-fit flex mx-2 items-center cursor-pointer"
-          @click="openGeneralModel('send')">
-          <img src="/send.png" alt="" class="h-3 mr-2">
-          <p>Send Message</p>
-        </button>
-        <button
-          class="outline outline-white px-4 py-2 text-xs font-semibold text-white rounded-lg h-fit flex items-center cursor-pointer"
-          @click="openGeneralModel('add')">
-          <img src="/add.png" alt="" class="h-3 mr-2">
-          <p>Add Friend</p>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="max-w-5xl mx-auto mt-24">
-
-    <div v-if="userList?.results && !showSpinner" class="flex gap-4 mb-4">
+  <Navbar />
+  <ProfileBanner @closeGeneralModel="closeGeneralModel" @openGeneralModel="openGeneralModel" />
+  <div class="max-w-5xl mx-auto  mt-5 lg:mt-24">
+    <div v-if="userList?.results && !showSpinner" class="mx-5 flex flex-col-reverse lg:flex-row gap-4 mb-4">
       <div class="flex justify-center items-center ">
-        <button v-if="currentPage > 1" @click="changePage(currentPage - 1)"
-          class="px-4 py-1 text-xs border rounded-lg mr-2 hover:bg-cyan-500 hover:text-white">
+        <button :disabled="currentPage <= 1" @click="changePage(currentPage - 1)"
+          class=" px-4 py-1 text-xs border rounded-lg mr-2 hover:bg-cyan-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-inherit">
           Previous
         </button>
-        <span class=" px-4 text-xs ">{{ currentPage }} / {{ totalPages }}</span>
+        <span class=" px-4 text-xs ">{{ currentPage }} - <span class="font-bold">{{ totalPages }}</span></span>
         <button v-if="currentPage < totalPages" @click="changePage(currentPage + 1)"
-          class="px-4 py-1 text-xs border rounded-lg ml-2 hover:bg-cyan-500 hover:text-white">
+          class="px-4 py-1 text-xs border rounded-lg ml-2 mr-2 hover:bg-cyan-500 hover:text-white">
           Next
         </button>
+        <button @click="fetchUser(currentPage.value, 'refresh')"
+          class="flex px-4 py-1.5 text-xs border rounded-lg hover:bg-cyan-500 hover:text-white items-center"><img
+            src="/refresh.png" alt="Refresh List" class="h-3"></button>
       </div>
 
-      <div class="ml-auto flex gap-4 mb-4 items-center">
-        <button @click="fetchUser"
-          class="flex px-4 py-1 text-xs border rounded-lg mr-2 hover:bg-cyan-500 hover:text-white items-center"><img
-            src="/refresh.png" alt="" class="h-3 mr-2">Refresh List</button>
+      <div class="ml-0 lg:ml-auto flex gap-4 mb-4 justify-center lg:items-center ">
+        <p>Get : </p>
         <button @click=" filterGender('female')"
-          class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white">
+          class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white"
+          :class="genderFilter == 'female' ? 'bg-pink-400 text-white': ''">
           Female
         </button>
         <button @click="filterGender('male')"
-          class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-blue-400 hover:text-white">
+          class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-blue-400 hover:text-white"
+          :class="genderFilter == 'male' ? 'bg-blue-400 text-white' : ''"
+          >
           Male
         </button>
       </div>
@@ -129,12 +101,7 @@ const closeGeneralModel = () => {
     <CardList v-if="userList?.results && !showSpinner" :userList="userList" @cardClicked="openPopup" />
     <spinner v-else />
   </div>
-
-
-
   <ModelPopup :showPopup="showPopup" :card="selectedCard" @close="closePopup" />
-  <GeneralModel :showGeneralModel="showGeneralModel" :typeOfModel="typeOfModel"
-    @closeGeneralModel="closeGeneralModel" />
 
 </template>
 

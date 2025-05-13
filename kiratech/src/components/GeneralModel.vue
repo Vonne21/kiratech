@@ -1,32 +1,49 @@
 <script setup>
-import {computed } from 'vue'
-
 const props = defineProps({
-  typeOfModel: String,
-  showGeneralModel: Boolean,
-});
-const emit = defineEmits(['closeGeneralModel']);
-const msg = computed(() => {
-  switch (props.typeOfModel) {
-    case 'send':
-      return 'Send Message to your friend!';
-    case 'add':
-      return 'Add new friend!';
-    default:
-      return 'No message available.';
-  }
-});
+  show: Boolean,
+  closable: {
+    type: Boolean,
+    default: true,
+  },
+})
+const emit = defineEmits(['closeGeneralModel'])
 
 </script>
 
 <template>
-  <div v-if="showGeneralModel" class="fixed inset-0 bg-gray-500/50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-2xl p-6 shadow-lg w-[90%] max-w-md text-center mb-3">
-      <img src="/cross.png" alt="" class="ml-auto cursor-pointer" @click="emit('closeGeneralModel')">
-      <p>{{ msg }}</p>
+  <Transition name="fade">
+    <div v-if="props.show" class="fixed inset-0 bg-gray-500/50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-2xl p-6 shadow-lg w-[90%] max-w-md text-center mb-3" @click.stop>
+        <div class="flex items-center mb-6 pb-3 border-b border-cyan-500">
+          <slot name="header">
+            <h2 class="text-lg font-semibold">Modal</h2>
+          </slot>
+          <img v-if="props.closable" src="/cross.png" alt="close" class="ml-auto  w-6 h-6 cursor-pointer"
+            @click="emit('closeGeneralModel')" />
+        </div>
+
+        <div class="mb-6 text-center">
+          <slot />
+        </div>
+
+        <div class="text-center">
+          <slot name="footer" />
+        </div>
+
+
+      </div>
     </div>
-    </div>
+  </Transition>
 </template>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
