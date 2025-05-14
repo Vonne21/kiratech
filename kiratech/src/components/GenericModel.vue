@@ -6,7 +6,7 @@ const props = defineProps({
     default: true,
   },
 })
-const emit = defineEmits(['closeGeneralModel'])
+const emit = defineEmits(['closeGenericModel'])
 
 </script>
 
@@ -19,7 +19,7 @@ const emit = defineEmits(['closeGeneralModel'])
             <h2 class="text-lg font-semibold">Modal</h2>
           </slot>
           <img v-if="props.closable" src="/cross.png" alt="close" class="ml-auto  w-6 h-6 cursor-pointer"
-            @click="emit('closeGeneralModel')" />
+            @click="emit('closeGenericModel')" />
         </div>
 
         <div class="mb-6 text-center">

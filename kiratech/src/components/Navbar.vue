@@ -1,15 +1,15 @@
 <script setup>
 import { ref, computed } from 'vue'
-import GeneralModel from './GeneralModel.vue'
+import GenericModel from './GenericModel.vue'
 
 const modalType = ref('')
 const showModal = ref(false)
 
-function showGeneralModel(type) {
+function showGenericModel(type) {
 	modalType.value = type;
 	showModal.value = true;
 }
-function closeGeneralModel() {
+function closeGenericModel() {
 	showModal.value = false;
 }
 
@@ -46,16 +46,16 @@ const modalContent = computed(() => {
 			<img src="/Logo.png" alt="" class="max-w-30 lg:max-w-44 mr-auto ml-7" />
 			<div class="flex items-center mr-5 lg:mr-7">
 				<img src="/notifications.png" alt="" class="w-11 h-11 cursor-pointer"
-					@click="showGeneralModel('noti')" />
+					@click="showGenericModel('noti')" />
 				<img src=" /settings.png" alt="" class="w-11 h-11 cursor-pointer"
-					@click="showGeneralModel('setting')" />
-				<img src="/logout.png" alt="" class="w-11 h-11 cursor-pointer" @click="showGeneralModel('logout')" />
+					@click="showGenericModel('setting')" />
+				<img src="/logout.png" alt="" class="w-11 h-11 cursor-pointer" @click="showGenericModel('logout')" />
 			</div>
 
 		</div>
 	</nav>
 
-	<GeneralModel :show="showModal" @closeGeneralModel="closeGeneralModel">
+	<GenericModel :show="showModal" @closeGenericModel="closeGenericModel">
 		<template #header>
 			<h2 class="text-xl font-bold hrllo">
 				{{ modalTitle }}
@@ -67,7 +67,7 @@ const modalContent = computed(() => {
 		</template>
 
 		<template #footer>
-			<button class="bg-cyan-500 text-white px-4 py-2 rounded" @click="closeGeneralModel">OK</button>
+			<button class="bg-cyan-500 text-white px-4 py-2 rounded" @click="closeGenericModel">OK</button>
 		</template>
-	</GeneralModel>
+	</GenericModel>
 </template>

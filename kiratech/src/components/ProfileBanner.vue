@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from 'vue'
-import GeneralModel from './GeneralModel.vue'
+import GenericModel from './GenericModel.vue'
 
 const modalType = ref('')
 const showModal = ref(false)
 
-function showGeneralModel(type) {
+function showGenericModel(type) {
 	modalType.value = type
 	showModal.value = true
 }
-function closeGeneralModel() {
+function closeGenericModel() {
 	showModal.value = false
 }
 </script>
@@ -25,13 +25,13 @@ function closeGeneralModel() {
 			<div class="flex flex-row self-center md:self-end ml-0 md:ml-4 mb-2">
 				<button
 					class="bg-white px-3 py-2 text-xs font-semibold text-cyan-500 rounded-sm h-fit flex mx-2 items-center cursor-pointer min-w-[130px] justify-center"
-					@click="showGeneralModel('send')">
+					@click="showGenericModel('send')">
 					<img src="/send.png" alt="" class="h-3 mr-2">
 					<p>Send Message</p>
 				</button>
 				<button
 					class="outline outline-white px-3 py-2 text-xs font-semibold text-white rounded-sm h-fit flex items-center cursor-pointer min-w-[130px] justify-center"
-					@click="showGeneralModel('add')">
+					@click="showGenericModel('add')">
 					<img src="/add.png" alt="" class="h-3 mr-2">
 					<p>Add Friend</p>
 				</button>
@@ -39,7 +39,7 @@ function closeGeneralModel() {
 		</div>
 	</div>
 
-	<GeneralModel :show="showModal" @closeGeneralModel="closeGeneralModel">
+	<GenericModel :show="showModal" @closeGenericModel="closeGenericModel">
 		<template #header>
 			<h2 class="text-xl font-bold">
 				{{ modalType === 'send' ? 'Send Message' : 'Add Friend' }}
@@ -52,8 +52,8 @@ function closeGeneralModel() {
 		</template>
 
 		<template #footer>
-			<button class="bg-cyan-500 text-white px-4 py-2 rounded" @click="closeGeneralModel">OK</button>
+			<button class="bg-cyan-500 text-white px-4 py-2 rounded" @click="closeGenericModel">OK</button>
 		</template>
-	</GeneralModel>
+	</GenericModel>
 
 </template>
