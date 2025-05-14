@@ -18,6 +18,10 @@ async function fetchUser(page = 1, button) {
   if (button == 'refresh') {
     // for fresh refresh
     genderFilter.value = '';
+  } else if (button == 'female') {
+    genderFilter.value = 'female';
+  } else if (button == 'male') {
+    genderFilter.value = 'male';
   }
   
   showSpinner.value = true;
@@ -59,14 +63,6 @@ const closePopup = () => {
   showPopup.value = false;
 };
 
-
-const filterGender = (gender) => {
-  genderFilter.value = gender;
-  currentPage.value = 1;
-  fetchUser(currentPage.value);
-};
-
-
 const totalPages = computed(() => {
   return 3; 
 });
@@ -100,12 +96,12 @@ const changePage = (page) => {
 
       <div class="ml-0 lg:ml-auto flex gap-4 lg:mb-4 justify-center lg:items-center ">
         <p>Get : </p>
-        <button @click=" filterGender('female')"
+        <button @click=" fetchUser(currentPage = 1, 'female')"
           class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white min-w-[72px]"
           :class="genderFilter == 'female' ? 'bg-pink-400 text-white': ''">
           Female
         </button>
-        <button @click="filterGender('male')"
+        <button @click="fetchUser(currentPage = 1, 'male')"
           class="px-4 py-1 text-xs border rounded-lg cursor-pointer hover:bg-blue-400 hover:text-white min-w-[72px]"
           :class="genderFilter == 'male' ? 'bg-blue-400 text-white' : ''">
           Male
