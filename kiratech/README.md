@@ -1,10 +1,35 @@
-# Vue 3 + Vite
+# Kiratech
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Welcome to **Kiratech Assignment** – a web page built with Vue.js! This project showcases a responsive designed to demonstrate frontend skills with a clean and maintainable codebase for Kiratech.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 🔧 Features
 
-__________________
--> npm install
-=> npm run dev
-__________________
+- ⚡️ Vite-powered.
+- 🧩 Vue 3 Composition API.
+- 🔄 Reusable components.
+- 🎨 Tailwind CSS.
+
+## 🛠️ Technologies Used
+
+- [Vue.js 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- TailwindCSS
+
+## 📂 Project Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/Vonne21/kiratech.git
+cd kiratech
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview the production build
+npm run preview
